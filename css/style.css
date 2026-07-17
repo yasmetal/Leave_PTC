@@ -1,0 +1,325 @@
+:root {
+  --primary: #0072bb;
+  --primary-dark: #292c73;
+  --accent: #f272ad;
+  --bg: #f4f6fb;
+  --card-bg: #ffffff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --border: #e2e8f0;
+  --danger: #dc2626;
+  --success: #16a34a;
+  --radius: 12px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", "Sarabun", "Noto Sans Thai", Tahoma, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.app {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 16px 16px 48px;
+}
+
+.app-header {
+  text-align: center;
+  padding: 28px 8px 12px;
+}
+
+.app-logo {
+  display: block;
+  margin: 0 auto 10px;
+  height: 66px;
+  width: auto;
+  filter: drop-shadow(0 2px 6px rgba(41, 44, 115, 0.18));
+}
+
+.app-header h1 {
+  font-size: 1.5rem;
+  margin: 0 0 6px;
+  color: var(--primary-dark);
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.leave-form {
+  margin-top: 20px;
+}
+
+.form-section {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 18px 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.form-section h2 {
+  font-size: 1.05rem;
+  margin: 0 0 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  color: var(--primary-dark);
+}
+
+.field {
+  margin-bottom: 14px;
+}
+
+.field-row {
+  display: flex;
+  gap: 12px;
+}
+
+.field-row .field {
+  flex: 1;
+  min-width: 0;
+}
+
+label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+
+.req {
+  color: var(--accent);
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 12px 12px;
+  font-size: 16px; /* prevents iOS zoom on focus */
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--text);
+  font-family: inherit;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(0, 114, 187, 0.15);
+}
+
+input[readonly] {
+  background: #f1f5f9;
+  color: var(--muted);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+button {
+  flex: 1;
+  padding: 14px 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  transition: background 0.15s ease;
+}
+
+.btn-primary:hover { background: var(--primary-dark); }
+
+.btn-primary:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: #eef2f7;
+  color: var(--text);
+}
+
+.status-msg {
+  text-align: center;
+  margin-top: 14px;
+  font-size: 0.92rem;
+  min-height: 20px;
+}
+
+.status-msg.success { color: var(--success); font-weight: 600; }
+.status-msg.error { color: var(--danger); font-weight: 600; }
+.status-msg.loading { color: var(--muted); }
+
+.app-footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.78rem;
+  margin-top: 24px;
+}
+
+.footer-logo {
+  display: block;
+  margin: 0 auto 8px;
+  opacity: 0.55;
+}
+
+.conn-status {
+  display: inline-block;
+  margin: 10px auto 0;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.conn-status.checking {
+  background: #eef2f7;
+  color: var(--muted);
+}
+
+.conn-status.ok {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.conn-status.error {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 0.8rem;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 8px 0;
+  flex: none;
+}
+
+@media (max-width: 420px) {
+  .field-row {
+    flex-direction: column;
+    gap: 0;
+  }
+  .app-header h1 { font-size: 1.3rem; }
+  .app-logo { height: 56px; }
+}
+
+/* ---------------------------------------------------------------------- */
+/* Popup แจ้งผลการส่งใบลา                                                  */
+/* ---------------------------------------------------------------------- */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1000;
+  animation: overlayFadeIn 0.15s ease-out;
+}
+
+.modal-overlay[hidden] {
+  display: none;
+}
+
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-box {
+  background: #fff;
+  border-radius: 16px;
+  padding: 28px 24px 22px;
+  max-width: 360px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 20px 45px rgba(0,0,0,0.25);
+  animation: modalPopIn 0.18s ease-out;
+  max-height: 88vh;
+  overflow-y: auto;
+}
+
+@keyframes modalPopIn {
+  from { opacity: 0; transform: scale(0.92) translateY(8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal-icon {
+  font-size: 2.6rem;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.modal-title {
+  margin: 0 0 8px;
+  font-size: 1.15rem;
+  color: var(--text);
+}
+
+.modal-message {
+  margin: 0 0 16px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.modal-steps {
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 0;
+  text-align: left;
+  background: #f8fafc;
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+
+.modal-steps li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.85rem;
+  padding: 5px 0;
+  color: var(--text);
+}
+
+.modal-steps li .step-icon {
+  flex: none;
+  width: 18px;
+  text-align: center;
+}
+
+.modal-steps li.step-ok { color: var(--success); }
+.modal-steps li.step-fail { color: var(--danger); font-weight: 600; }
+.modal-steps li.step-pending { color: var(--muted); }
+
+.modal-close-btn {
+  width: 100%;
+}
