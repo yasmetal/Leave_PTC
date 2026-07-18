@@ -9,7 +9,7 @@
   --border: #e2e8f0;
   --danger: #dc2626;
   --success: #16a34a;
-  --radius: 12px;
+  --radius: 14px;
 }
 
 * { box-sizing: border-box; }
@@ -17,7 +17,9 @@
 body {
   margin: 0;
   font-family: "Segoe UI", "Sarabun", "Noto Sans Thai", Tahoma, sans-serif;
-  background: var(--bg);
+  background:
+    linear-gradient(180deg, rgba(0, 114, 187, 0.08) 0%, rgba(244, 246, 251, 0) 260px),
+    var(--bg);
   color: var(--text);
   -webkit-font-smoothing: antialiased;
 }
@@ -27,6 +29,8 @@ body {
   margin: 0 auto;
   padding: 16px 16px 48px;
 }
+
+/* ---------------- Header ---------------- */
 
 .app-header {
   text-align: center;
@@ -54,27 +58,61 @@ body {
 }
 
 .leave-form {
-  margin-top: 20px;
+  margin-top: 14px;
 }
+
+.req-legend {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin: 0 4px 10px;
+  text-align: right;
+}
+
+/* ---------------- Sections ---------------- */
 
 .form-section {
   background: var(--card-bg);
   border-radius: var(--radius);
-  padding: 18px 16px;
+  padding: 20px 18px;
   margin-bottom: 16px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 10px rgba(41, 44, 115, 0.06);
+  border: 1px solid rgba(226, 232, 240, 0.8);
 }
 
 .form-section h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-size: 1.05rem;
-  margin: 0 0 14px;
-  padding-bottom: 8px;
+  margin: 0 0 16px;
+  padding-bottom: 10px;
   border-bottom: 1px solid var(--border);
   color: var(--primary-dark);
 }
 
+.step-badge {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(0, 114, 187, 0.35);
+}
+
+/* ---------------- Fields ---------------- */
+
 .field {
-  margin-bottom: 14px;
+  margin-bottom: 15px;
+}
+
+.field:last-child {
+  margin-bottom: 2px;
 }
 
 .field-row {
@@ -99,15 +137,27 @@ label {
   color: var(--accent);
 }
 
+.hint {
+  margin: 5px 2px 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
 input, select, textarea {
   width: 100%;
-  padding: 12px 12px;
+  padding: 13px 14px;
   font-size: 16px; /* prevents iOS zoom on focus */
-  border: 1px solid var(--border);
-  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
   background: #fff;
   color: var(--text);
   font-family: inherit;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #b0b7c3;
 }
 
 input:focus, select:focus, textarea:focus {
@@ -123,41 +173,119 @@ input[readonly] {
 
 textarea {
   resize: vertical;
-  min-height: 90px;
+  min-height: 80px;
 }
+
+/* select แบบมีลูกศรที่มองเห็นชัด */
+.select-wrap {
+  position: relative;
+}
+
+.select-wrap select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 42px;
+  cursor: pointer;
+}
+
+.select-wrap::after {
+  content: "▾";
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--primary);
+  font-size: 1rem;
+  pointer-events: none;
+}
+
+/* ---------------- แถบสรุปจำนวนวันลา ---------------- */
+
+.days-summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(90deg, rgba(0, 114, 187, 0.08), rgba(242, 114, 173, 0.08));
+  border: 1.5px dashed rgba(0, 114, 187, 0.35);
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 15px;
+}
+
+.days-summary-icon {
+  font-size: 1.2rem;
+  flex: none;
+}
+
+.days-summary-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary-dark);
+  flex: none;
+}
+
+.days-summary-value {
+  flex: 1;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  font-weight: 700;
+  color: var(--primary) !important;
+  text-align: right;
+  padding: 4px 0;
+  font-size: 1.05rem;
+}
+
+/* ---------------- Buttons ---------------- */
 
 .form-actions {
   display: flex;
   gap: 10px;
-  margin-top: 4px;
+  margin-top: 8px;
 }
 
 button {
   flex: 1;
-  padding: 14px 16px;
-  font-size: 1rem;
-  font-weight: 600;
-  border-radius: 10px;
+  padding: 15px 16px;
+  font-size: 1.02rem;
+  font-weight: 700;
+  border-radius: 12px;
   border: none;
   cursor: pointer;
   font-family: inherit;
+  transition: transform 0.1s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
 
 .btn-primary {
-  background: var(--primary);
+  flex: 2;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
   color: #fff;
-  transition: background 0.15s ease;
+  box-shadow: 0 4px 14px rgba(0, 114, 187, 0.35);
 }
 
-.btn-primary:hover { background: var(--primary-dark); }
+.btn-primary:hover {
+  box-shadow: 0 6px 18px rgba(0, 114, 187, 0.45);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
 
 .btn-primary:disabled {
   background: #94a3b8;
+  box-shadow: none;
+  transform: none;
   cursor: not-allowed;
 }
 
 .btn-secondary {
   background: #eef2f7;
+  color: var(--muted);
+}
+
+.btn-secondary:hover {
+  background: #e2e8f0;
   color: var(--text);
 }
 
@@ -171,6 +299,8 @@ button {
 .status-msg.success { color: var(--success); font-weight: 600; }
 .status-msg.error { color: var(--danger); font-weight: 600; }
 .status-msg.loading { color: var(--muted); }
+
+/* ---------------- Footer ---------------- */
 
 .app-footer {
   text-align: center;
@@ -220,13 +350,26 @@ button {
   flex: none;
 }
 
+/* ---------------- Mobile ---------------- */
+
 @media (max-width: 420px) {
+  .app { padding: 12px 12px 40px; }
   .field-row {
     flex-direction: column;
     gap: 0;
   }
-  .app-header h1 { font-size: 1.3rem; }
+  .app-header h1 { font-size: 1.32rem; }
   .app-logo { height: 56px; }
+  .form-section { padding: 18px 14px; }
+  .form-actions {
+    position: sticky;
+    bottom: 10px;
+    z-index: 50;
+  }
+  .form-actions .btn-primary {
+    box-shadow: 0 6px 20px rgba(0, 114, 187, 0.5);
+  }
+  .days-summary-label { font-size: 0.8rem; }
 }
 
 /* ---------------------------------------------------------------------- */
@@ -294,11 +437,10 @@ button {
 .modal-steps {
   list-style: none;
   margin: 0 0 20px;
-  padding: 0;
+  padding: 12px 14px;
   text-align: left;
   background: #f8fafc;
   border-radius: 10px;
-  padding: 12px 14px;
 }
 
 .modal-steps li {

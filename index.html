@@ -18,57 +18,62 @@
         alt="Phattha Packdee"
         width="72" height="66">
       <h1>ระบบยื่นใบลาออนไลน์</h1>
-      <p class="subtitle">กรอกแบบฟอร์มด้านล่างให้ครบถ้วน ระบบจะบันทึกข้อมูลอัตโนมัติ</p>
+      <p class="subtitle">ใช้เวลากรอกไม่ถึง 2 นาที ข้อมูลถูกบันทึกอัตโนมัติ</p>
       <p id="connStatus" class="conn-status checking">🔄 กำลังตรวจสอบการเชื่อมต่อ...</p>
     </header>
 
     <form id="leaveForm" class="leave-form" novalidate>
 
+      <p class="req-legend"><span class="req">*</span> = จำเป็นต้องกรอก</p>
+
       <section class="form-section">
-        <h2>ข้อมูลผู้ลา</h2>
+        <h2><span class="step-badge">1</span> ข้อมูลผู้ลา</h2>
 
         <div class="field">
           <label for="fullName">ชื่อ-นามสกุล <span class="req">*</span></label>
-          <input type="text" id="fullName" name="fullName" required autocomplete="name">
+          <input type="text" id="fullName" name="fullName" required autocomplete="name" placeholder="เช่น สมชาย ใจดี">
         </div>
 
         <div class="field-row">
           <div class="field">
             <label for="employeeId">รหัสพนักงาน</label>
-            <input type="text" id="employeeId" name="employeeId" autocomplete="off">
+            <input type="text" id="employeeId" name="employeeId" autocomplete="off" placeholder="ถ้ามี">
           </div>
           <div class="field">
             <label for="position">ตำแหน่ง</label>
-            <input type="text" id="position" name="position">
+            <input type="text" id="position" name="position" placeholder="เช่น พนักงานคลังสินค้า">
           </div>
         </div>
 
         <div class="field">
           <label for="department">แผนก / ฝ่าย <span class="req">*</span></label>
-          <input type="text" id="department" name="department" required>
+          <input type="text" id="department" name="department" required placeholder="เช่น ฝ่ายจัดส่ง">
         </div>
 
         <div class="field">
           <label for="phone">เบอร์ติดต่อระหว่างลา <span class="req">*</span></label>
-          <input type="tel" id="phone" name="phone" required inputmode="tel" placeholder="08X-XXX-XXXX">
+          <input type="tel" id="phone" name="phone" required inputmode="tel" autocomplete="tel" placeholder="08X-XXX-XXXX">
+          <p class="hint">เบอร์ที่หัวหน้างานติดต่อได้ระหว่างที่ท่านลา</p>
         </div>
       </section>
 
       <section class="form-section">
-        <h2>รายละเอียดการลา</h2>
+        <h2><span class="step-badge">2</span> รายละเอียดการลา</h2>
 
         <div class="field">
           <label for="leaveType">ประเภทการลา <span class="req">*</span></label>
-          <select id="leaveType" name="leaveType" required>
-            <option value="" disabled selected>-- เลือกประเภทการลา --</option>
-            <option value="ลาป่วย">ลาป่วย</option>
-            <option value="ลากิจ">ลากิจส่วนตัว</option>
-            <option value="ลาพักร้อน">ลาพักร้อน</option>
-            <option value="ลาคลอด">ลาคลอด</option>
-            <option value="ลาบวช">ลาบวช</option>
-            <option value="ลาไม่รับค่าจ้าง">ลาไม่รับค่าจ้าง</option>
-            <option value="อื่นๆ">อื่นๆ</option>
-          </select>
+          <div class="select-wrap">
+            <select id="leaveType" name="leaveType" required>
+              <option value="" disabled selected>แตะเพื่อเลือกประเภทการลา</option>
+              <option value="ลาป่วย">🤒 ลาป่วย</option>
+              <option value="ลากิจ">🏠 ลากิจส่วนตัว</option>
+              <option value="ลาพักร้อน">🏖️ ลาพักร้อน</option>
+              <option value="ลาคลอด">👶 ลาคลอด</option>
+              <option value="ลาบวช">🙏 ลาบวช</option>
+              <option value="ลาไม่รับค่าจ้าง">📄 ลาไม่รับค่าจ้าง</option>
+              <option value="อื่นๆ">✏️ อื่นๆ</option>
+            </select>
+          </div>
         </div>
 
         <div class="field-row">
@@ -77,38 +82,40 @@
             <input type="date" id="startDate" name="startDate" required>
           </div>
           <div class="field">
-            <label for="endDate">วันที่สิ้นสุดการลา <span class="req">*</span></label>
+            <label for="endDate">วันสุดท้ายที่ลา <span class="req">*</span></label>
             <input type="date" id="endDate" name="endDate" required>
           </div>
         </div>
 
-        <div class="field">
-          <label for="totalDays">จำนวนวันลา (คำนวณอัตโนมัติ)</label>
-          <input type="text" id="totalDays" name="totalDays" readonly placeholder="0 วัน">
+        <div class="days-summary" aria-live="polite">
+          <span class="days-summary-icon">📅</span>
+          <span class="days-summary-label">รวมจำนวนวันลา</span>
+          <input type="text" id="totalDays" name="totalDays" readonly placeholder="เลือกวันที่ก่อน" class="days-summary-value">
         </div>
 
         <div class="field">
-          <label for="reason">เหตุผล / รายละเอียดเพิ่มเติม <span class="req">*</span></label>
-          <textarea id="reason" name="reason" rows="4" required></textarea>
+          <label for="reason">เหตุผลการลา <span class="req">*</span></label>
+          <textarea id="reason" name="reason" rows="3" required placeholder="เช่น มีไข้สูง ไปพบแพทย์ / ติดธุระครอบครัวต่างจังหวัด"></textarea>
         </div>
       </section>
 
       <section class="form-section">
-        <h2>การอนุมัติ</h2>
+        <h2><span class="step-badge">3</span> การอนุมัติ</h2>
 
         <div class="field">
           <label for="approver">ผู้อนุมัติ (หัวหน้างาน) <span class="req">*</span></label>
-          <input type="text" id="approver" name="approver" required>
+          <input type="text" id="approver" name="approver" required placeholder="ชื่อหัวหน้างานของท่าน">
         </div>
 
         <div class="field">
-          <label for="signature">ลงชื่อผู้ยื่นคำร้อง (พิมพ์ชื่อ-สกุลแทนลายเซ็น) <span class="req">*</span></label>
-          <input type="text" id="signature" name="signature" required placeholder="พิมพ์ชื่อ-นามสกุลของท่าน">
+          <label for="signature">ลงชื่อผู้ยื่นคำร้อง <span class="req">*</span></label>
+          <input type="text" id="signature" name="signature" required placeholder="พิมพ์ชื่อ-นามสกุลแทนลายเซ็น">
+          <p class="hint">การพิมพ์ชื่อถือเป็นการยืนยันว่าข้อมูลข้างต้นเป็นความจริง</p>
         </div>
       </section>
 
       <div class="form-actions">
-        <button type="submit" id="submitBtn" class="btn-primary">ส่งใบลา</button>
+        <button type="submit" id="submitBtn" class="btn-primary">📨 ส่งใบลา</button>
         <button type="reset" class="btn-secondary">ล้างข้อมูล</button>
       </div>
 
