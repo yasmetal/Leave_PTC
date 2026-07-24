@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>อนุมัติใบลา | Phattha Packdee</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a href="#main" class="skip-link">ข้ามไปยังเนื้อหาหลัก</a>
+
+<header class="topbar">
+  <img class="logo-mark-img" src="assets/logo.png" srcset="assets/logo.png 1x, assets/logo@2x.png 2x" alt="Phattha Packdee" width="38" height="38">
+  <div>
+    <div class="brand-name">Phattha Packdee</div>
+    <div class="brand-sub">ระบบใบลาออนไลน์</div>
+  </div>
+  <div class="topbar-spacer"></div>
+  <div class="topbar-user">
+    <span>วิภา ศรีสุข · หัวหน้างาน</span>
+    <span class="avatar" aria-hidden="true">วศ</span>
+  </div>
+</header>
+
+<nav class="nav-tabs" aria-label="เมนูหลัก">
+  <a class="nav-tab" href="index.html">ยื่นใบลา</a>
+  <a class="nav-tab" href="my-requests.html">สถานะของฉัน</a>
+  <a class="nav-tab active" href="approve.html">อนุมัติ <span class="badge badge-pending" style="padding:2px 7px;">3</span></a>
+  <a class="nav-tab" href="overview.html">ภาพรวม</a>
+</nav>
+
+<main id="main" class="shell-wide">
+
+  <div class="mockup-banner" role="note">
+    <span aria-hidden="true">🧪</span>
+    <span>หน้าตัวอย่าง (UI mockup) — ยังไม่เชื่อมต่อข้อมูลจริง ข้อมูลที่แสดงเป็นตัวอย่างเพื่อดูหน้าตาเท่านั้น</span>
+  </div>
+
+  <div class="page-head">
+    <h1>คำขอลาที่รออนุมัติ</h1>
+    <p>ทีมฝ่ายคลังและจัดส่ง · มี 3 คำขอรอการพิจารณา</p>
+  </div>
+
+  <div class="request-list">
+
+    <div class="card" style="margin-bottom:12px;">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+        <div style="display:flex;gap:12px;">
+          <span class="avatar" aria-hidden="true" style="width:42px;height:42px;font-size:0.85rem;">สจ</span>
+          <div>
+            <div style="font-weight:700;">สมชาย ใจดี <span class="text-muted" style="font-weight:400;font-size:0.82rem;">· ฝ่ายคลังและจัดส่ง</span></div>
+            <div style="font-size:0.9rem;margin-top:2px;">🏖️ ลาพักร้อน · 22–24 ก.ค. 2569 (3 วัน)</div>
+            <div class="text-muted" style="font-size:0.82rem;margin-top:4px;">เดินทางไปพักผ่อนกับครอบครัวต่างจังหวัด วางแผนล่วงหน้าไว้แล้ว</div>
+          </div>
+        </div>
+        <span class="badge badge-pending">รออนุมัติ</span>
+      </div>
+      <div class="btn-row">
+        <a href="request-detail.html" class="btn btn-secondary btn-sm">ดูรายละเอียด</a>
+        <button type="button" class="btn btn-danger btn-sm" onclick="openModal('rejectModal')">ไม่อนุมัติ</button>
+        <button type="button" class="btn btn-success btn-sm" onclick="showToast('อนุมัติคำขอของสมชาย ใจดี แล้ว'); this.closest('.card').style.opacity=0.45; this.closest('.card').style.pointerEvents='none';">อนุมัติ</button>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:12px;">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+        <div style="display:flex;gap:12px;">
+          <span class="avatar" aria-hidden="true" style="width:42px;height:42px;font-size:0.85rem;">กร</span>
+          <div>
+            <div style="font-weight:700;">กัญญา รุ่งเรือง <span class="text-muted" style="font-weight:400;font-size:0.82rem;">· ฝ่ายคลังและจัดส่ง</span></div>
+            <div style="font-size:0.9rem;margin-top:2px;">🤒 ลาป่วย · 24 ก.ค. 2569 (1 วัน)</div>
+            <div class="text-muted" style="font-size:0.82rem;margin-top:4px;">มีไข้สูง ไปพบแพทย์ที่โรงพยาบาล</div>
+          </div>
+        </div>
+        <span class="badge badge-pending">รออนุมัติ</span>
+      </div>
+      <div class="btn-row">
+        <a href="request-detail.html" class="btn btn-secondary btn-sm">ดูรายละเอียด</a>
+        <button type="button" class="btn btn-danger btn-sm" onclick="openModal('rejectModal')">ไม่อนุมัติ</button>
+        <button type="button" class="btn btn-success btn-sm" onclick="showToast('อนุมัติคำขอของกัญญา รุ่งเรือง แล้ว'); this.closest('.card').style.opacity=0.45; this.closest('.card').style.pointerEvents='none';">อนุมัติ</button>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:12px;">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+        <div style="display:flex;gap:12px;">
+          <span class="avatar" aria-hidden="true" style="width:42px;height:42px;font-size:0.85rem;">ธน</span>
+          <div>
+            <div style="font-weight:700;">ธนวัฒน์ ปิ่นแก้ว <span class="text-muted" style="font-weight:400;font-size:0.82rem;">· ฝ่ายคลังและจัดส่ง</span></div>
+            <div style="font-size:0.9rem;margin-top:2px;">🏠 ลากิจส่วนตัว · 26 ก.ค. 2569 (1 วัน)</div>
+            <div class="text-muted" style="font-size:0.82rem;margin-top:4px;">ติดธุระทำเอกสารราชการ</div>
+          </div>
+        </div>
+        <span class="badge badge-pending">รออนุมัติ</span>
+      </div>
+      <div class="btn-row">
+        <a href="request-detail.html" class="btn btn-secondary btn-sm">ดูรายละเอียด</a>
+        <button type="button" class="btn btn-danger btn-sm" onclick="openModal('rejectModal')">ไม่อนุมัติ</button>
+        <button type="button" class="btn btn-success btn-sm" onclick="showToast('อนุมัติคำขอของธนวัฒน์ ปิ่นแก้ว แล้ว'); this.closest('.card').style.opacity=0.45; this.closest('.card').style.pointerEvents='none';">อนุมัติ</button>
+      </div>
+    </div>
+
+  </div>
+
+  <section class="card">
+    <h2>อนุมัติล่าสุด</h2>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>พนักงาน</th><th>ประเภท</th><th>วันที่</th><th>สถานะ</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>สมชาย ใจดี</td><td>ลาป่วย</td><td>2 ก.ค. 2569</td><td><span class="badge badge-approved">อนุมัติแล้ว</span></td></tr>
+          <tr><td>สมชาย ใจดี</td><td>ลากิจส่วนตัว</td><td>18 มิ.ย. 2569</td><td><span class="badge badge-rejected">ไม่อนุมัติ</span></td></tr>
+          <tr><td>กัญญา รุ่งเรือง</td><td>ลาพักร้อน</td><td>1–3 พ.ค. 2569</td><td><span class="badge badge-approved">อนุมัติแล้ว</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<!-- Reject reason modal -->
+<div class="modal-overlay" id="rejectModal" hidden>
+  <div class="modal-box" role="alertdialog" aria-modal="true" aria-labelledby="rejectTitle">
+    <h3 id="rejectTitle" class="modal-title">ไม่อนุมัติคำขอนี้</h3>
+    <p class="modal-message">โปรดระบุเหตุผลสั้น ๆ เพื่อแจ้งให้พนักงานทราบ</p>
+    <div class="field">
+      <label for="rejectReason">เหตุผล <span class="req">*</span></label>
+      <textarea id="rejectReason" rows="3" placeholder="เช่น ช่วงนั้นตรงกับวันตรวจสต๊อกประจำเดือน"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-secondary" onclick="closeModal('rejectModal')">ยกเลิก</button>
+      <button type="button" class="btn btn-danger" onclick="closeModal('rejectModal'); showToast('ส่งผลไม่อนุมัติแล้ว');">ยืนยันไม่อนุมัติ</button>
+    </div>
+  </div>
+</div>
+
+<nav class="bottom-nav" aria-label="เมนูหลัก (มือถือ)">
+  <div class="bottom-nav-list">
+    <a class="bottom-nav-item" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="M14 3v5h5"/><path d="M12 12v5M9.5 14.5h5"/></svg>
+      ยื่นใบลา
+    </a>
+    <a class="bottom-nav-item" href="my-requests.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h10M9 12h10M9 18h10"/><path d="m4 6 1.5 1.5L8 5"/><path d="m4 12 1.5 1.5L8 11"/><path d="m4 18 1.5 1.5L8 17"/></svg>
+      สถานะ
+    </a>
+    <a class="bottom-nav-item active" href="approve.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.09 1.26 2.44-.2 1.02 2.24 2.24 1.02-.2 2.44L21 12l-1.41 2.24.2 2.44-2.24 1.02-1.02 2.24-2.44-.2L12 21l-2.09-1.26-2.44.2-1.02-2.24-2.24-1.02.2-2.44L3 12l1.41-2.24-.2-2.44 2.24-1.02 1.02-2.24 2.44.2Z"/><path d="m9 12 2 2 4-4"/></svg>
+      อนุมัติ
+      <span class="nav-badge">3</span>
+    </a>
+    <a class="bottom-nav-item" href="overview.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V11M11 20V5M17 20v-6"/><path d="M3 20h18"/></svg>
+      ภาพรวม
+    </a>
+  </div>
+</nav>
+
+<script src="js/common.js"></script>
+</body>
+</html>

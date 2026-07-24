@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ภาพรวม | Phattha Packdee</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a href="#main" class="skip-link">ข้ามไปยังเนื้อหาหลัก</a>
+
+<header class="topbar">
+  <img class="logo-mark-img" src="assets/logo.png" srcset="assets/logo.png 1x, assets/logo@2x.png 2x" alt="Phattha Packdee" width="38" height="38">
+  <div>
+    <div class="brand-name">Phattha Packdee</div>
+    <div class="brand-sub">ระบบใบลาออนไลน์</div>
+  </div>
+  <div class="topbar-spacer"></div>
+  <div class="topbar-user">
+    <span>ฝ่ายบุคคล (HR)</span>
+    <span class="avatar" aria-hidden="true">HR</span>
+  </div>
+</header>
+
+<nav class="nav-tabs" aria-label="เมนูหลัก">
+  <a class="nav-tab" href="index.html">ยื่นใบลา</a>
+  <a class="nav-tab" href="my-requests.html">สถานะของฉัน</a>
+  <a class="nav-tab" href="approve.html">อนุมัติ <span class="badge badge-pending" style="padding:2px 7px;">3</span></a>
+  <a class="nav-tab active" href="overview.html">ภาพรวม</a>
+</nav>
+
+<main id="main" class="shell-wide">
+
+  <div class="mockup-banner" role="note">
+    <span aria-hidden="true">🧪</span>
+    <span>หน้าตัวอย่าง (UI mockup) — ยังไม่เชื่อมต่อข้อมูลจริง ข้อมูลที่แสดงเป็นตัวอย่างเพื่อดูหน้าตาเท่านั้น</span>
+  </div>
+
+  <div class="page-head">
+    <h1>ภาพรวมการลาทั้งองค์กร</h1>
+    <p>เดือนกรกฎาคม 2569 · ทุกแผนก</p>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-label">คำขอทั้งหมดเดือนนี้</div>
+      <div class="stat-value">27</div>
+      <div class="stat-trend">▲ 12% จากเดือนก่อน</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">รออนุมัติ</div>
+      <div class="stat-value warn">3</div>
+      <div class="stat-trend" style="color:var(--muted);">ใน 2 แผนก</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">อนุมัติแล้ว</div>
+      <div class="stat-value" style="color:var(--success);">22</div>
+      <div class="stat-trend">อัตราอนุมัติ 92%</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">ไม่อนุมัติ</div>
+      <div class="stat-value" style="color:var(--danger);">2</div>
+      <div class="stat-trend" style="color:var(--muted);">8% ของคำขอทั้งหมด</div>
+    </div>
+  </div>
+
+  <section class="card">
+    <h2>สัดส่วนประเภทการลา (เดือนนี้)</h2>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:0.86rem;margin-bottom:4px;"><span>🏖️ ลาพักร้อน</span><span class="text-muted">11 วัน</span></div>
+        <div style="height:8px;border-radius:999px;background:#eef2f7;overflow:hidden;"><div style="width:41%;height:100%;background:var(--primary);"></div></div>
+      </div>
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:0.86rem;margin-bottom:4px;"><span>🤒 ลาป่วย</span><span class="text-muted">8 วัน</span></div>
+        <div style="height:8px;border-radius:999px;background:#eef2f7;overflow:hidden;"><div style="width:30%;height:100%;background:var(--accent);"></div></div>
+      </div>
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:0.86rem;margin-bottom:4px;"><span>🏠 ลากิจส่วนตัว</span><span class="text-muted">5 วัน</span></div>
+        <div style="height:8px;border-radius:999px;background:#eef2f7;overflow:hidden;"><div style="width:19%;height:100%;background:var(--primary-dark);"></div></div>
+      </div>
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:0.86rem;margin-bottom:4px;"><span>อื่นๆ</span><span class="text-muted">3 วัน</span></div>
+        <div style="height:8px;border-radius:999px;background:#eef2f7;overflow:hidden;"><div style="width:10%;height:100%;background:#94a3b8;"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>ปฏิทินการลาทีม (สัปดาห์นี้)</h2>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>พนักงาน</th><th>แผนก</th><th>วันที่ลา</th><th>ประเภท</th><th>สถานะ</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>สมชาย ใจดี</td><td>คลังและจัดส่ง</td><td>22–24 ก.ค.</td><td>ลาพักร้อน</td><td><span class="badge badge-pending">รออนุมัติ</span></td></tr>
+          <tr><td>กัญญา รุ่งเรือง</td><td>คลังและจัดส่ง</td><td>24 ก.ค.</td><td>ลาป่วย</td><td><span class="badge badge-pending">รออนุมัติ</span></td></tr>
+          <tr><td>ธนวัฒน์ ปิ่นแก้ว</td><td>คลังและจัดส่ง</td><td>26 ก.ค.</td><td>ลากิจส่วนตัว</td><td><span class="badge badge-pending">รออนุมัติ</span></td></tr>
+          <tr><td>อรทัย พงษ์ศิริ</td><td>บัญชี</td><td>25 ก.ค.</td><td>ลาป่วย</td><td><span class="badge badge-approved">อนุมัติแล้ว</span></td></tr>
+          <tr><td>ปิยะพงษ์ แสงทอง</td><td>ขนส่ง</td><td>23 ก.ค.</td><td>ลากิจส่วนตัว</td><td><span class="badge badge-approved">อนุมัติแล้ว</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<nav class="bottom-nav" aria-label="เมนูหลัก (มือถือ)">
+  <div class="bottom-nav-list">
+    <a class="bottom-nav-item" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="M14 3v5h5"/><path d="M12 12v5M9.5 14.5h5"/></svg>
+      ยื่นใบลา
+    </a>
+    <a class="bottom-nav-item" href="my-requests.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h10M9 12h10M9 18h10"/><path d="m4 6 1.5 1.5L8 5"/><path d="m4 12 1.5 1.5L8 11"/><path d="m4 18 1.5 1.5L8 17"/></svg>
+      สถานะ
+    </a>
+    <a class="bottom-nav-item" href="approve.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.09 1.26 2.44-.2 1.02 2.24 2.24 1.02-.2 2.44L21 12l-1.41 2.24.2 2.44-2.24 1.02-1.02 2.24-2.44-.2L12 21l-2.09-1.26-2.44.2-1.02-2.24-2.24-1.02.2-2.44L3 12l1.41-2.24-.2-2.44 2.24-1.02 1.02-2.24 2.44.2Z"/><path d="m9 12 2 2 4-4"/></svg>
+      อนุมัติ
+      <span class="nav-badge">3</span>
+    </a>
+    <a class="bottom-nav-item active" href="overview.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V11M11 20V5M17 20v-6"/><path d="M3 20h18"/></svg>
+      ภาพรวม
+    </a>
+  </div>
+</nav>
+
+<script src="js/common.js"></script>
+</body>
+</html>
