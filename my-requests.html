@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>สถานะใบลาของฉัน | Phattha Packdee</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -15,121 +17,71 @@
     <div class="brand-name">Phattha Packdee</div>
     <div class="brand-sub">ระบบใบลาออนไลน์</div>
   </div>
-  <div class="topbar-spacer"></div>
-  <div class="topbar-user">
-    <span>สมชาย ใจดี</span>
-    <span class="avatar" aria-hidden="true">สจ</span>
-  </div>
 </header>
 
 <nav class="nav-tabs" aria-label="เมนูหลัก">
-  <a class="nav-tab" href="index.html">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="M14 3v5h5"/><path d="M12 12v5M9.5 14.5h5"/></svg>
-    ยื่นใบลา
-  </a>
-  <a class="nav-tab active" href="my-requests.html">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h10M9 12h10M9 18h10"/><path d="m4 6 1.5 1.5L8 5"/><path d="m4 12 1.5 1.5L8 11"/><path d="m4 18 1.5 1.5L8 17"/></svg>
-    สถานะของฉัน
-  </a>
-  <a class="nav-tab" href="approve.html">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.09 1.26 2.44-.2 1.02 2.24 2.24 1.02-.2 2.44L21 12l-1.41 2.24.2 2.44-2.24 1.02-1.02 2.24-2.44-.2L12 21l-2.09-1.26-2.44.2-1.02-2.24-2.24-1.02.2-2.44L3 12l1.41-2.24-.2-2.44 2.24-1.02 1.02-2.24 2.44.2Z"/><path d="m9 12 2 2 4-4"/></svg>
-    อนุมัติ
-    <span class="badge badge-pending" style="padding:2px 7px;">3</span>
-  </a>
-  <a class="nav-tab" href="overview.html">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V11M11 20V5M17 20v-6"/><path d="M3 20h18"/></svg>
-    ภาพรวม
-  </a>
+  <a class="nav-tab" href="index.html">ยื่นใบลา</a>
+  <a class="nav-tab active" href="my-requests.html">สถานะของฉัน</a>
+  <a class="nav-tab" href="approve.html">อนุมัติ</a>
+  <a class="nav-tab" href="overview.html">ภาพรวม</a>
 </nav>
 
 <main id="main" class="shell">
-
-  <div class="mockup-banner" role="note">
-    <span aria-hidden="true">🧪</span>
-    <span>หน้าตัวอย่าง (UI mockup) — ยังไม่เชื่อมต่อข้อมูลจริง ข้อมูลที่แสดงเป็นตัวอย่างเพื่อดูหน้าตาเท่านั้น</span>
-  </div>
 
   <div class="page-head">
     <h1>สถานะใบลาของฉัน</h1>
     <p>ติดตามคำขอลาที่ยื่นไปแล้วและผลการอนุมัติ</p>
   </div>
 
-  <div class="chip-row" role="tablist" aria-label="กรองตามสถานะ">
-    <button type="button" class="chip active" data-filter="all">ทั้งหมด (5)</button>
-    <button type="button" class="chip" data-filter="pending">รออนุมัติ (1)</button>
-    <button type="button" class="chip" data-filter="approved">อนุมัติแล้ว (3)</button>
-    <button type="button" class="chip" data-filter="rejected">ไม่อนุมัติ (1)</button>
+  <!-- แสดงเมื่อยังไม่รู้ว่าเป็นใคร (ไม่มีระบบล็อกอิน ใช้ชื่อค้นหาแบบง่าย) -->
+  <section class="card" id="lookupCard" hidden>
+    <h2>ค้นหาใบลาของคุณ</h2>
+    <p class="text-muted" style="margin-top:-8px;margin-bottom:14px;font-size:0.85rem;">
+      กรอกชื่อ-นามสกุลเดียวกับตอนยื่นใบลา ระบบจะจำไว้ในเครื่องนี้เพื่อความสะดวกครั้งถัดไป
+    </p>
+    <form id="lookupForm">
+      <div class="field">
+        <label for="lookupName">ชื่อ-นามสกุล <span class="req">*</span></label>
+        <input type="text" id="lookupName" name="lookupName" required placeholder="เช่น สมชาย ใจดี">
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">ค้นหาใบลาของฉัน</button>
+    </form>
+  </section>
+
+  <div id="dataArea" hidden>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px;">
+      <p class="text-muted" style="font-size:0.84rem;margin:0;" id="lookupNameLabel"></p>
+      <button type="button" class="btn-link" id="changeIdentityBtn">เปลี่ยนชื่อ</button>
+    </div>
+
+    <div class="chip-row" role="tablist" aria-label="กรองตามสถานะ">
+      <button type="button" class="chip active" data-filter="all">ทั้งหมด</button>
+      <button type="button" class="chip" data-filter="รออนุมัติ">รออนุมัติ</button>
+      <button type="button" class="chip" data-filter="อนุมัติแล้ว">อนุมัติแล้ว</button>
+      <button type="button" class="chip" data-filter="ไม่อนุมัติ">ไม่อนุมัติ</button>
+      <button type="button" class="chip" data-filter="ยกเลิกแล้ว">ยกเลิกแล้ว</button>
+    </div>
+
+    <div class="request-list" id="requestList"></div>
+
+    <div class="empty-state" id="emptyState" hidden>
+      <div class="empty-icon">🗂️</div>
+      <h3 id="emptyTitle">ไม่พบใบลาในหมวดนี้</h3>
+      <p id="emptyText">ลองเลือกตัวกรองอื่น หรือยื่นใบลาใหม่</p>
+      <a href="index.html" class="btn btn-primary">+ ยื่นใบลาใหม่</a>
+    </div>
   </div>
 
-  <div class="request-list" id="requestList">
-
-    <a class="request-card" data-status="pending" href="request-detail.html">
-      <div class="request-card-top">
-        <span class="request-card-type">🏖️ ลาพักร้อน</span>
-        <span class="badge badge-pending">รออนุมัติ</span>
-      </div>
-      <div class="request-card-meta">
-        <span>22–24 ก.ค. 2569</span>
-        <span>· 3 วัน</span>
-      </div>
-      <div class="request-card-name">ยื่นเมื่อ 20 ก.ค. 2569 · รออนุมัติจากคุณวิภา ศรีสุข</div>
-    </a>
-
-    <a class="request-card" data-status="approved" href="request-detail.html">
-      <div class="request-card-top">
-        <span class="request-card-type">🤒 ลาป่วย</span>
-        <span class="badge badge-approved">อนุมัติแล้ว</span>
-      </div>
-      <div class="request-card-meta">
-        <span>2 ก.ค. 2569</span>
-        <span>· 1 วัน</span>
-      </div>
-      <div class="request-card-name">อนุมัติโดยคุณวิภา ศรีสุข · 2 ก.ค. 2569</div>
-    </a>
-
-    <a class="request-card" data-status="rejected" href="request-detail.html">
-      <div class="request-card-top">
-        <span class="request-card-type">🏠 ลากิจส่วนตัว</span>
-        <span class="badge badge-rejected">ไม่อนุมัติ</span>
-      </div>
-      <div class="request-card-meta">
-        <span>18 มิ.ย. 2569</span>
-        <span>· 1 วัน</span>
-      </div>
-      <div class="request-card-name">ไม่อนุมัติโดยคุณวิภา ศรีสุข · ช่วงนั้นตรงกับวันตรวจสต๊อกประจำเดือน</div>
-    </a>
-
-    <a class="request-card" data-status="approved" href="request-detail.html">
-      <div class="request-card-top">
-        <span class="request-card-type">🏖️ ลาพักร้อน</span>
-        <span class="badge badge-approved">อนุมัติแล้ว</span>
-      </div>
-      <div class="request-card-meta">
-        <span>1–3 พ.ค. 2569</span>
-        <span>· 3 วัน</span>
-      </div>
-      <div class="request-card-name">อนุมัติโดยคุณวิภา ศรีสุข · 25 เม.ย. 2569</div>
-    </a>
-
-    <a class="request-card" data-status="approved" href="request-detail.html">
-      <div class="request-card-top">
-        <span class="request-card-type">🙏 ลาบวช</span>
-        <span class="badge badge-approved">อนุมัติแล้ว</span>
-      </div>
-      <div class="request-card-meta">
-        <span>10–16 มี.ค. 2569</span>
-        <span>· 7 วัน</span>
-      </div>
-      <div class="request-card-name">อนุมัติโดยคุณวิภา ศรีสุข · 1 มี.ค. 2569</div>
-    </a>
-
+  <div class="empty-state" id="loadingState">
+    <div class="empty-icon">⏳</div>
+    <h3>กำลังโหลดข้อมูล...</h3>
   </div>
 
-  <div class="empty-state" id="emptyState" hidden>
-    <div class="empty-icon">🗂️</div>
-    <h3>ไม่พบใบลาในหมวดนี้</h3>
-    <p>ลองเลือกตัวกรองอื่น หรือยื่นใบลาใหม่</p>
-    <a href="index.html" class="btn btn-primary">+ ยื่นใบลาใหม่</a>
+  <div class="empty-state" id="errorState" hidden>
+    <div class="empty-icon">⚠️</div>
+    <h3>โหลดข้อมูลไม่สำเร็จ</h3>
+    <p id="errorText"></p>
+    <button type="button" class="btn btn-secondary" id="retryBtn">ลองอีกครั้ง</button>
   </div>
 
 </main>
@@ -147,7 +99,6 @@
     <a class="bottom-nav-item" href="approve.html">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.09 1.26 2.44-.2 1.02 2.24 2.24 1.02-.2 2.44L21 12l-1.41 2.24.2 2.44-2.24 1.02-1.02 2.24-2.44-.2L12 21l-2.09-1.26-2.44.2-1.02-2.24-2.24-1.02.2-2.44L3 12l1.41-2.24-.2-2.44 2.24-1.02 1.02-2.24 2.44.2Z"/><path d="m9 12 2 2 4-4"/></svg>
       อนุมัติ
-      <span class="nav-badge">3</span>
     </a>
     <a class="bottom-nav-item" href="overview.html">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V11M11 20V5M17 20v-6"/><path d="M3 20h18"/></svg>
@@ -156,7 +107,9 @@
   </div>
 </nav>
 
+<script src="js/config.js"></script>
 <script src="js/common.js"></script>
-<script src="js/filters.js"></script>
+<script src="js/api.js"></script>
+<script src="js/my-requests.js"></script>
 </body>
 </html>
