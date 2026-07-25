@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>รายละเอียดใบลา | Phattha Packdee</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -15,94 +17,84 @@
     <div class="brand-name">Phattha Packdee</div>
     <div class="brand-sub">ระบบใบลาออนไลน์</div>
   </div>
-  <div class="topbar-spacer"></div>
-  <div class="topbar-user">
-    <span>สมชาย ใจดี</span>
-    <span class="avatar" aria-hidden="true">สจ</span>
-  </div>
 </header>
 
 <nav class="nav-tabs" aria-label="เมนูหลัก">
   <a class="nav-tab" href="index.html">ยื่นใบลา</a>
   <a class="nav-tab active" href="my-requests.html">สถานะของฉัน</a>
-  <a class="nav-tab" href="approve.html">อนุมัติ <span class="badge badge-pending" style="padding:2px 7px;">3</span></a>
+  <a class="nav-tab" href="approve.html">อนุมัติ</a>
   <a class="nav-tab" href="overview.html">ภาพรวม</a>
 </nav>
 
 <main id="main" class="shell">
 
-  <div class="mockup-banner" role="note">
-    <span aria-hidden="true">🧪</span>
-    <span>หน้าตัวอย่าง (UI mockup) — ยังไม่เชื่อมต่อข้อมูลจริง ข้อมูลที่แสดงเป็นตัวอย่างเพื่อดูหน้าตาเท่านั้น</span>
-  </div>
-
   <a href="my-requests.html" class="btn-link" style="display:inline-flex;align-items:center;gap:4px;text-decoration:none;margin-bottom:12px;">← กลับไปหน้าสถานะใบลา</a>
 
-  <div class="page-head" style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;">
-    <div>
-      <h1 style="margin-bottom:6px;">🏖️ ลาพักร้อน</h1>
-      <p>ยื่นเมื่อ 20 ก.ค. 2569 · รหัสคำขอ #LR-2569-0142</p>
-    </div>
-    <span class="badge badge-pending" style="font-size:0.82rem;">รออนุมัติ</span>
+  <div class="empty-state" id="loadingState">
+    <div class="empty-icon">⏳</div>
+    <h3>กำลังโหลดข้อมูล...</h3>
   </div>
 
-  <section class="card">
-    <h2>รายละเอียดคำขอ</h2>
-    <div class="detail-grid">
-      <div class="detail-item">
-        <div class="detail-label">ผู้ยื่น</div>
-        <div class="detail-value">สมชาย ใจดี (EMP-0142)</div>
-      </div>
-      <div class="detail-item">
-        <div class="detail-label">แผนก / ฝ่าย</div>
-        <div class="detail-value">ฝ่ายคลังและจัดส่ง</div>
-      </div>
-      <div class="detail-item">
-        <div class="detail-label">ช่วงวันที่ลา</div>
-        <div class="detail-value">22–24 ก.ค. 2569</div>
-      </div>
-      <div class="detail-item">
-        <div class="detail-label">จำนวนวันลา</div>
-        <div class="detail-value">3 วัน</div>
-      </div>
-      <div class="detail-item">
-        <div class="detail-label">เบอร์ติดต่อระหว่างลา</div>
-        <div class="detail-value">081-234-5678</div>
-      </div>
-      <div class="detail-item">
-        <div class="detail-label">ผู้อนุมัติ</div>
-        <div class="detail-value">คุณวิภา ศรีสุข</div>
-      </div>
-    </div>
-    <div class="field" style="margin-top:16px;">
-      <div class="detail-label" style="margin-bottom:4px;">เหตุผลการลา</div>
-      <div class="detail-value" style="font-weight:400;">เดินทางไปพักผ่อนกับครอบครัวต่างจังหวัด วางแผนล่วงหน้าไว้แล้ว</div>
-    </div>
-  </section>
+  <div class="empty-state" id="errorState" hidden>
+    <div class="empty-icon">⚠️</div>
+    <h3 id="errorTitle">ไม่พบคำขอนี้</h3>
+    <p id="errorText"></p>
+    <a href="my-requests.html" class="btn btn-secondary">กลับไปหน้าสถานะใบลา</a>
+  </div>
 
-  <section class="card">
-    <h2>ความคืบหน้าการอนุมัติ</h2>
-    <ol class="timeline">
-      <li class="done">
-        <span class="dot" aria-hidden="true"></span>
-        <div class="tl-title">ยื่นคำขอลา</div>
-        <div class="tl-meta">สมชาย ใจดี · 20 ก.ค. 2569 เวลา 09:14</div>
-      </li>
-      <li class="current">
-        <span class="dot" aria-hidden="true"></span>
-        <div class="tl-title">รอการอนุมัติจากหัวหน้างาน</div>
-        <div class="tl-meta">คุณวิภา ศรีสุข · คาดว่าจะตอบกลับภายใน 1–2 วันทำการ</div>
-      </li>
-      <li>
-        <span class="dot" aria-hidden="true"></span>
-        <div class="tl-title" style="color:var(--muted);">บันทึกลงระบบวันลา</div>
-        <div class="tl-meta">จะดำเนินการหลังอนุมัติ</div>
-      </li>
-    </ol>
-  </section>
+  <div id="detailArea" hidden>
 
-  <div class="btn-row">
-    <button type="button" class="btn-secondary btn-block" onclick="openModal('cancelModal')">ยกเลิกคำขอนี้</button>
+    <div class="page-head" style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;">
+      <div>
+        <h1 id="leaveTypeTitle" style="margin-bottom:6px;"></h1>
+        <p id="metaLine"></p>
+      </div>
+      <span id="statusBadgeHolder"></span>
+    </div>
+
+    <section class="card">
+      <h2>รายละเอียดคำขอ</h2>
+      <div class="detail-grid">
+        <div class="detail-item">
+          <div class="detail-label">ผู้ยื่น</div>
+          <div class="detail-value" id="dFullName"></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">แผนก / ฝ่าย</div>
+          <div class="detail-value" id="dDepartment"></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">ช่วงวันที่ลา</div>
+          <div class="detail-value" id="dDateRange"></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">จำนวนวันลา</div>
+          <div class="detail-value" id="dTotalDays"></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">เบอร์ติดต่อระหว่างลา</div>
+          <div class="detail-value" id="dPhone"></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">ผู้อนุมัติ</div>
+          <div class="detail-value" id="dApprover"></div>
+        </div>
+      </div>
+      <div class="field" style="margin-top:16px;">
+        <div class="detail-label" style="margin-bottom:4px;">เหตุผลการลา</div>
+        <div class="detail-value" style="font-weight:400;" id="dReason"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>ความคืบหน้าการอนุมัติ</h2>
+      <ol class="timeline" id="timeline"></ol>
+    </section>
+
+    <div class="btn-row" id="cancelRow" hidden>
+      <button type="button" class="btn-secondary btn-block" id="cancelBtn">ยกเลิกคำขอนี้</button>
+    </div>
+
   </div>
 
 </main>
@@ -112,10 +104,10 @@
   <div class="modal-box center" role="alertdialog" aria-modal="true" aria-labelledby="cancelTitle">
     <div class="modal-icon">🗑️</div>
     <h3 id="cancelTitle" class="modal-title">ยกเลิกคำขอลานี้?</h3>
-    <p class="modal-message">คำขอลาวันที่ 22–24 ก.ค. 2569 จะถูกยกเลิก และหัวหน้างานจะได้รับแจ้งเตือน การกระทำนี้ไม่สามารถย้อนกลับได้</p>
+    <p class="modal-message" id="cancelMessage">การกระทำนี้ไม่สามารถย้อนกลับได้</p>
     <div class="modal-actions">
       <button type="button" class="btn btn-secondary" onclick="closeModal('cancelModal')">ไม่ยกเลิก</button>
-      <button type="button" class="btn btn-danger" onclick="closeModal('cancelModal'); showToast('ยกเลิกคำขอลาแล้ว');">ยืนยันยกเลิก</button>
+      <button type="button" class="btn btn-danger" id="confirmCancelBtn">ยืนยันยกเลิก</button>
     </div>
   </div>
 </div>
@@ -133,7 +125,6 @@
     <a class="bottom-nav-item" href="approve.html">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.09 1.26 2.44-.2 1.02 2.24 2.24 1.02-.2 2.44L21 12l-1.41 2.24.2 2.44-2.24 1.02-1.02 2.24-2.44-.2L12 21l-2.09-1.26-2.44.2-1.02-2.24-2.24-1.02.2-2.44L3 12l1.41-2.24-.2-2.44 2.24-1.02 1.02-2.24 2.44.2Z"/><path d="m9 12 2 2 4-4"/></svg>
       อนุมัติ
-      <span class="nav-badge">3</span>
     </a>
     <a class="bottom-nav-item" href="overview.html">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V11M11 20V5M17 20v-6"/><path d="M3 20h18"/></svg>
@@ -142,6 +133,9 @@
   </div>
 </nav>
 
+<script src="js/config.js"></script>
 <script src="js/common.js"></script>
+<script src="js/api.js"></script>
+<script src="js/request-detail.js"></script>
 </body>
 </html>
