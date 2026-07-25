@@ -17,9 +17,19 @@
   const modalMessage = document.getElementById("modalMessage");
   const modalSteps = document.getElementById("modalSteps");
   const modalCloseBtn = document.getElementById("modalCloseBtn");
+  const modalActions = document.getElementById("modalActions");
 
-  let lastCheckOk = false;
   let lastFocusedEl = null;
+
+  // ---- จำข้อมูลผู้ใช้ครั้งก่อน (ถ้ามี) เพื่อความสะดวก ไม่ใช่การล็อกอิน ----
+  (function prefillFromIdentity() {
+    const identity = window.LeaveCommon && LeaveCommon.getIdentity();
+    if (!identity) return;
+    const fullNameEl = document.getElementById("fullName");
+    const employeeIdEl = document.getElementById("employeeId");
+    if (fullNameEl && !fullNameEl.value) fullNameEl.value = identity.fullName || "";
+    if (employeeIdEl && !employeeIdEl.value) employeeIdEl.value = identity.employeeId || "";
+  })();
 
   // ---- คำนวณจำนวนวันลาอัตโนมัติ ----
   function calcDays() {
@@ -57,19 +67,8 @@
     connStatus.className = "conn-status " + type;
   }
 
-  function isConfigured() {
-    return (
-      typeof CONFIG !== "undefined" &&
-      CONFIG.WEBAPP_URL &&
-      CONFIG.WEBAPP_URL.indexOf("PASTE_YOUR") === -1
-    );
-  }
-
   // =====================================================================
   // Popup แจ้งผลการส่งใบลา
-  // เรียกทุกครั้งที่กด "ส่งใบลา" ไม่ว่าผลจะสำเร็จหรือไม่ (ห้ามเงียบ)
-  // แสดงรายการขั้นตอนทั้งหมด พร้อมไอคอนบอกว่าติดอยู่ที่ขั้นตอนไหน
-  //   ✅ ผ่าน   ❌ ติดตรงนี้ (สาเหตุที่ส่งไม่สำเร็จ)   ⏳ ยังไม่ถึงขั้นตอนนี้
   // =====================================================================
   function renderSteps(steps) {
     modalSteps.innerHTML = "";
@@ -97,6 +96,17 @@
     modalMessage.textContent = opts.message;
     renderSteps(opts.steps || []);
 
+    if (modalActions) {
+      modalActions.innerHTML = "";
+      if (opts.success) {
+        const link = document.createElement("a");
+        link.href = "my-requests.html";
+        link.className = "btn btn-secondary";
+        link.textContent = "ดูสถานะใบลา";
+        modalActions.appendChild(link);
+      }
+    }
+
     lastFocusedEl = document.activeElement;
     resultModal.hidden = false;
     document.body.style.overflow = "hidden";
@@ -121,52 +131,20 @@
 
   // =====================================================================
   // ตรวจสอบการเชื่อมต่อกับ Google Apps Script Web App
-  // เรียกอัตโนมัติตอนโหลดหน้า และเมื่อกดปุ่ม "ทดสอบการเชื่อมต่ออีกครั้ง"
   // =====================================================================
   async function checkConnection() {
-    if (!isConfigured()) {
-      lastCheckOk = false;
-      setConnStatus(
-        "⚠️ ยังไม่ได้ตั้งค่า WEBAPP_URL ใน js/config.js (ดู README.md)",
-        "error"
-      );
+    if (!window.LeaveAPI || !LeaveAPI.isConfigured()) {
+      setConnStatus("⚠️ ยังไม่ได้ตั้งค่า WEBAPP_URL ใน js/config.js (ดู README.md)", "error");
       return;
     }
 
     setConnStatus("🔄 กำลังตรวจสอบการเชื่อมต่อ...", "checking");
 
-    try {
-      const response = await fetch(CONFIG.WEBAPP_URL, { method: "GET" });
-      const raw = await response.text();
-
-      let data;
-      try {
-        data = JSON.parse(raw);
-      } catch (parseErr) {
-        lastCheckOk = false;
-        setConnStatus(
-          "🔴 เชื่อมต่อไม่ได้: Apps Script ตอบกลับเป็นหน้าเว็บ ไม่ใช่ JSON (มักเกิดจาก \"Who has access\" ไม่ได้ตั้งเป็น Anyone ตอน Deploy)",
-          "error"
-        );
-        return;
-      }
-
-      if (data && data.status === "ok") {
-        lastCheckOk = true;
-        setConnStatus("🟢 เชื่อมต่อสำเร็จ ระบบพร้อมรับข้อมูล", "ok");
-      } else {
-        lastCheckOk = false;
-        setConnStatus(
-          "🔴 Apps Script ตอบกลับผิดปกติ: " + (data && data.message ? data.message : "ไม่ทราบสาเหตุ"),
-          "error"
-        );
-      }
-    } catch (err) {
-      lastCheckOk = false;
-      setConnStatus(
-        "🔴 เชื่อมต่อไม่ได้ (" + err.message + ") ตรวจสอบ URL ใน config.js และสถานะการ Deploy",
-        "error"
-      );
+    const result = await LeaveAPI.apiGet("health");
+    if (result.ok) {
+      setConnStatus("🟢 เชื่อมต่อสำเร็จ ระบบพร้อมรับข้อมูล", "ok");
+    } else {
+      setConnStatus("🔴 " + result.message, "error");
     }
   }
 
@@ -176,31 +154,15 @@
 
   checkConnection();
 
-  function describeSubmitError(err) {
-    if (err instanceof TypeError) {
-      return (
-        "ไม่สามารถติดต่อเซิร์ฟเวอร์ได้ (" + err.message + ") " +
-        "สาเหตุที่พบบ่อย: ยังไม่ได้ Deploy Apps Script, URL ใน config.js ผิด, " +
-        "หรือตั้งค่า \"Who has access\" ไม่ใช่ Anyone ตอน Deploy"
-      );
-    }
-    return err.message;
-  }
-
   // =====================================================================
   // ส่งฟอร์ม — ติดตามทีละขั้นตอน แล้วแสดง popup แจ้งผลเสมอ (ไม่เงียบ)
-  // ขั้นตอนที่ติดตาม:
-  //   1) ตรวจสอบข้อมูลในฟอร์ม
-  //   2) เชื่อมต่อกับเซิร์ฟเวอร์ (Google Apps Script)
-  //   3) เซิร์ฟเวอร์บันทึกข้อมูลลง Google Sheet
   // =====================================================================
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
 
     const steps = [
       { label: "ตรวจสอบข้อมูลในฟอร์ม", status: "pending" },
-      { label: "เชื่อมต่อกับเซิร์ฟเวอร์ (Google Apps Script)", status: "pending" },
-      { label: "เซิร์ฟเวอร์บันทึกข้อมูลลง Google Sheet", status: "pending" }
+      { label: "ส่งข้อมูลไปเซิร์ฟเวอร์และบันทึกลง Google Sheet", status: "pending" }
     ];
 
     // ---- ขั้นตอนที่ 1: ตรวจสอบข้อมูล ----
@@ -230,8 +192,7 @@
     }
     steps[0].status = "ok";
 
-    // ---- ขั้นตอนที่ 2: ตรวจสอบว่าตั้งค่าเชื่อมต่อไว้หรือยัง ----
-    if (!isConfigured()) {
+    if (!window.LeaveAPI || !LeaveAPI.isConfigured()) {
       steps[1].status = "fail";
       showResultModal({
         success: false,
@@ -239,10 +200,6 @@
         message: "ยังไม่ได้ตั้งค่า WEBAPP_URL ใน js/config.js กรุณา deploy Google Apps Script ก่อน (ดู README.md)",
         steps: steps
       });
-      setStatus(
-        "ยังไม่ได้ตั้งค่า WEBAPP_URL ใน js/config.js กรุณา deploy Google Apps Script ก่อน (ดู README.md)",
-        "error"
-      );
       return;
     }
 
@@ -250,7 +207,6 @@
     setStatus("กำลังส่งข้อมูล...", "loading");
 
     const payload = {
-      timestamp: new Date().toISOString(),
       fullName: document.getElementById("fullName").value.trim(),
       employeeId: document.getElementById("employeeId").value.trim(),
       position: document.getElementById("position").value.trim(),
@@ -265,70 +221,45 @@
       signature: document.getElementById("signature").value.trim()
     };
 
-    try {
-      // ใช้ Content-Type: text/plain เพื่อหลีกเลี่ยงปัญหา CORS preflight
-      // กับ Google Apps Script Web App (ฝั่ง Apps Script จะอ่านค่าจาก e.postData.contents)
-      const response = await fetch(CONFIG.WEBAPP_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(payload)
-      });
+    const result = await LeaveAPI.apiPost("submit", payload);
+    submitBtn.disabled = false;
 
-      // ได้รับการตอบกลับจากเซิร์ฟเวอร์แล้ว = ขั้นตอนที่ 2 ผ่าน
-      steps[1].status = "ok";
-
-      const raw = await response.text();
-      let result;
-      try {
-        result = JSON.parse(raw);
-      } catch (parseErr) {
-        steps[2].status = "fail";
-        throw new Error(
-          "เซิร์ฟเวอร์ตอบกลับไม่ใช่ JSON (มักเกิดจากสิทธิ์การ Deploy ไม่ถูกต้อง เช่น \"Who has access\" ไม่ใช่ Anyone)"
-        );
-      }
-
-      if (result && result.status === "error") {
-        steps[2].status = "fail";
-        throw new Error(result.message || "เกิดข้อผิดพลาดที่ฝั่งเซิร์ฟเวอร์ (Apps Script)");
-      }
-
-      steps[2].status = "ok";
-
-      setStatus("✅ ส่งใบลาสำเร็จแล้ว ระบบได้บันทึกข้อมูลของท่านเรียบร้อย", "success");
-      showResultModal({
-        success: true,
-        title: "ส่งใบลาสำเร็จ",
-        message: "ระบบบันทึกข้อมูลของท่านลง Google Sheet เรียบร้อยแล้ว",
-        steps: steps
-      });
-
-      form.reset();
-      totalDaysEl.value = "";
-      lastCheckOk = true;
-      setConnStatus("🟢 เชื่อมต่อสำเร็จ ระบบพร้อมรับข้อมูล", "ok");
-    } catch (err) {
-      console.error(err);
-
-      // fetch เองล้มเหลว (เช่น "Failed to fetch") แปลว่าไม่ถึงเซิร์ฟเวอร์เลย -> ขั้นตอน 2 คือจุดที่ติด
-      if (steps[1].status === "pending") {
-        steps[1].status = "fail";
-      }
-
-      const message = describeSubmitError(err);
-      setStatus("❌ ส่งข้อมูลไม่สำเร็จ: " + message, "error");
+    if (!result.ok) {
+      steps[1].status = "fail";
+      setStatus("❌ ส่งข้อมูลไม่สำเร็จ: " + result.message, "error");
       showResultModal({
         success: false,
         title: "ส่งใบลาไม่สำเร็จ",
-        message: message,
+        message: result.message,
         steps: steps
       });
-
-      // ส่งไม่สำเร็จ -> ตรวจสอบการเชื่อมต่อซ้ำอัตโนมัติ เพื่อช่วยวินิจฉัยสาเหตุ
       checkConnection();
-    } finally {
-      submitBtn.disabled = false;
+      return;
     }
+
+    steps[1].status = "ok";
+    setStatus("✅ ส่งใบลาสำเร็จแล้ว ระบบได้บันทึกข้อมูลของท่านเรียบร้อย", "success");
+    showResultModal({
+      success: true,
+      title: "ส่งใบลาสำเร็จ",
+      message: "ระบบบันทึกข้อมูลของท่านลง Google Sheet เรียบร้อยแล้ว รหัสคำขอ: " + (result.data && result.data.id ? result.data.id : "-"),
+      steps: steps
+    });
+
+    // จำชื่อ-รหัสพนักงานไว้ในเครื่องนี้ (ไม่ใช่การล็อกอิน) เพื่อให้หน้า "สถานะของฉัน" ใช้ค้นหาให้อัตโนมัติ
+    if (window.LeaveCommon) {
+      LeaveCommon.setIdentity({ fullName: payload.fullName, employeeId: payload.employeeId });
+    }
+
+    form.reset();
+    totalDaysEl.value = "";
+    setConnStatus("🟢 เชื่อมต่อสำเร็จ ระบบพร้อมรับข้อมูล", "ok");
+
+    // เติมชื่อ-รหัสพนักงานกลับเข้าไปหลังเคลียร์ฟอร์ม เพื่อความสะดวกถ้าต้องยื่นซ้ำ
+    const fullNameEl = document.getElementById("fullName");
+    const employeeIdEl = document.getElementById("employeeId");
+    if (fullNameEl) fullNameEl.value = payload.fullName;
+    if (employeeIdEl) employeeIdEl.value = payload.employeeId;
   });
 
   form.addEventListener("reset", function () {
