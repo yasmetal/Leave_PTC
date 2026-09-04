@@ -30,7 +30,11 @@
 
   <div class="page-head">
     <h1>ภาพรวมการลาทั้งองค์กร</h1>
-    <p id="monthLabel">กำลังโหลด...</p>
+    <div style="display:flex;align-items:center;gap:10px;margin-top:6px;">
+      <button type="button" class="btn btn-secondary btn-sm" id="prevMonthBtn" aria-label="ดูเดือนก่อนหน้า">‹ เดือนก่อน</button>
+      <p id="monthLabel" style="margin:0;min-width:160px;text-align:center;">กำลังโหลด...</p>
+      <button type="button" class="btn btn-secondary btn-sm" id="nextMonthBtn" aria-label="ดูเดือนถัดไป">เดือนถัดไป ›</button>
+    </div>
   </div>
 
   <div class="empty-state" id="loadingState">
@@ -49,7 +53,7 @@
 
     <div class="stat-grid">
       <div class="stat-card">
-        <div class="stat-label">คำขอทั้งหมดเดือนนี้</div>
+        <div class="stat-label">คำขอทั้งหมด</div>
         <div class="stat-value" id="statTotal">0</div>
       </div>
       <div class="stat-card">
@@ -67,19 +71,32 @@
     </div>
 
     <section class="card">
-      <h2>สัดส่วนประเภทการลา (เดือนนี้)</h2>
+      <h2>สัดส่วนประเภทการลา (<span id="byTypeMonthLabel">เดือนนี้</span>)</h2>
       <div id="byTypeChart" style="display:flex;flex-direction:column;gap:12px;"></div>
       <p class="text-muted" id="noTypeData" style="font-size:0.85rem;" hidden>ยังไม่มีข้อมูลการลาในเดือนนี้</p>
     </section>
 
     <section class="card">
-      <h2>คำขอลาล่าสุด</h2>
+      <h2>ใครลาไปบ้าง (<span id="monthTableLabel">เดือนนี้</span>)</h2>
       <div class="table-wrap">
         <table class="data-table">
           <thead>
             <tr><th>พนักงาน</th><th>แผนก</th><th>วันที่ลา</th><th>ประเภท</th><th>สถานะ</th></tr>
           </thead>
-          <tbody id="recentBody"></tbody>
+          <tbody id="monthListBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>สรุปจำนวนครั้งที่ลาแต่ละคน</h2>
+      <p class="text-muted" style="font-size:0.85rem;margin-top:-8px;">สะสมทั้งหมดทุกเดือน · นับเฉพาะคำขอที่อนุมัติแล้ว</p>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>พนักงาน</th><th>แผนก</th><th>จำนวนครั้งที่ลา</th></tr>
+          </thead>
+          <tbody id="totalsBody"></tbody>
         </table>
       </div>
     </section>

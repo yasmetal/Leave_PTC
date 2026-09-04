@@ -284,7 +284,10 @@ function handleOverview(params) {
   const targetMonth = params.month || Utilities.formatDate(now, tz, "yyyy-MM");
 
   const inMonth = rows.filter(function (r) {
-    const d = r.startDate || dateToYmd(r.timestamp, tz);
+    // r.startDate อาจเป็น Date object จริง ๆ ได้ ถ้า Google Sheets auto-detect คอลัมน์นี้เป็นวันที่
+    // (พบบ่อยเมื่อค่าที่บันทึกมีรูปแบบ yyyy-MM-dd) ต้องแปลงเป็นสตริงก่อนเทียบเสมอ ไม่เช่นนั้นแถวจะหลุดจากทุกเดือน
+    const raw = r.startDate;
+    const d = raw instanceof Date ? dateToYmd(raw, tz) : (raw || dateToYmd(r.timestamp, tz));
     return typeof d === "string" && d.indexOf(targetMonth) === 0;
   });
 
@@ -306,13 +309,44 @@ function handleOverview(params) {
   const recentAll = rows.slice();
   sortByTimestampDesc(recentAll);
 
+  // รายชื่อผู้ลาทั้งหมดในเดือนที่เลือก (เรียงตามวันที่เริ่มลา) — ใช้ตอบ "ใครลาไปเดือนไหนบ้าง"
+  const monthRequests = inMonth.slice();
+  monthRequests.sort(function (a, b) {
+    const da = a.startDate instanceof Date ? a.startDate : new Date(a.startDate || 0);
+    const db = b.startDate instanceof Date ? b.startDate : new Date(b.startDate || 0);
+    return da.getTime() - db.getTime();
+  });
+
+  // สรุปจำนวนครั้งที่ลาสะสมทั้งหมดของแต่ละคน (ทุกเดือน ไม่จำกัดเฉพาะเดือนที่เลือกดู)
+  // นับเฉพาะคำขอที่ "อนุมัติแล้ว" เท่านั้น
+  const totalsMap = {};
+  rows.forEach(function (r) {
+    if ((r.status || STATUS_PENDING) !== STATUS_APPROVED) return;
+    const key = (r.employeeId && String(r.employeeId).trim()) || r.fullName || "-";
+    if (!totalsMap[key]) {
+      totalsMap[key] = {
+        employeeId: r.employeeId || "",
+        fullName: r.fullName || "",
+        department: r.department || "",
+        count: 0
+      };
+    }
+    totalsMap[key].count++;
+  });
+  const totalsByPerson = Object.keys(totalsMap).map(function (k) { return totalsMap[k]; });
+  totalsByPerson.sort(function (a, b) {
+    return b.count - a.count || String(a.fullName).localeCompare(String(b.fullName), "th");
+  });
+
   return {
     status: "ok",
     data: {
       month: targetMonth,
       counts: counts,
       byType: byType,
-      recent: recentAll.slice(0, 10).map(toSummary)
+      recent: recentAll.slice(0, 10).map(toSummary),
+      monthRequests: monthRequests.map(toSummary),
+      totalsByPerson: totalsByPerson
     }
   };
 }
